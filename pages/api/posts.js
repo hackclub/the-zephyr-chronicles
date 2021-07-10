@@ -16,22 +16,6 @@ export const getRawPosts = async (max = null, params = {}) => {
 
 export const formatTS = ts => (ts ? new Date(ts * 1000).toISOString() : null)
 
-export const transformReactions = (raw = []) =>
-  compact(
-    raw.map(str => {
-      try {
-        const parts = str.split(' ')
-        const name = stripColons(parts[0])
-        if (name === 'aom') return null
-        const obj = { name }
-        obj[parts[1]?.startsWith('http') ? 'url' : 'char'] = parts[1]
-        return obj
-      } catch (e) {
-        return null
-      }
-    })
-  )
-
 export const transformPost = (id = null, fields = {}, user = null) => ({
   id,
   user,
@@ -41,7 +25,7 @@ export const transformPost = (id = null, fields = {}, user = null) => ({
   text: fields['Text'] || '',
   attachments: fields['Attachments'] || [],
   mux: fields['Mux Playback IDs']?.split(',') || [],
-  reactions: transformReactions(fields['Filtered Emoji Reactions']) || []
+
 })
 
 export const getPosts = async (max = null) => {

@@ -1,21 +1,29 @@
 import { map, find, isEmpty, orderBy } from 'lodash'
 import { getRawUsers, transformUser } from '../index'
 import { getRawPosts, transformPost } from '../../posts'
+import prisma from '../../../../lib/prisma'
 
-export const getProfile = async (value, field = 'Username') => {
-  const opts = JSON.stringify({
-    maxRecords: 1,
-    filterByFormula: `${
-      field === 'id' ? 'RECORD_ID()' : `{${field}}`
-    } = "${value}"`
-  })
-  const user = await fetch(
-    `https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts?select=${opts}`
-  )
-    .then(r => r.json())
-    .then(a => (Array.isArray(a) ? a[0] : null))
+export const getProfile = async (value, field) => {
+  let user = (await prisma.user.findMany({
+    where: {
+      name: value,
+    },
+    select: {
+      id: true,
+      name: true,
+      cssURL: true,
+      audioURL: true,
+      profilePicture: true,
+      Posts: {
+        select: {
+          id: true,
+        }
+      },
+    },
+  }))[0]
+  console.log(user)
   if (!user) console.error('Could not fetch account', value)
-  return user && user?.fields?.Username ? transformUser(user) : {}
+  return user
 }
 
 export const getPosts = async user => {
@@ -25,22 +33,6 @@ export const getPosts = async user => {
 
   if (!allUpdates) console.error('Could not fetch posts')
   return allUpdates.map(({ id, fields }) => transformPost(id, fields))
-}
-
-export const getMentions = async user => {
-  const users = await getRawUsers(true)
-  const allUpdates = await getRawPosts(null, {
-    filterByFormula: `IF(FIND("@${user.username}",{text})>0,TRUE(),FALSE())`
-  })
-  if (!allUpdates) console.error('Could not fetch posts')
-  return allUpdates
-    .map(p => {
-      const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
-      p.user = user.id ? transformUser(user) : null
-      return p
-    })
-    .filter(p => !isEmpty(p.user))
-    .map(({ id, user, fields }) => transformPost(id, fields, user))
 }
 
 export default async (req, res) => {
