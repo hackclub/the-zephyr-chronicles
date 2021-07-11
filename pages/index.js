@@ -13,10 +13,10 @@ const Header = ({ status, children }) => {
     <>
       <Meta
         as={Head}
-        name="Hack Club Scrapbook"
+        name="Hacker Zephyr Chronicles"
         title="Home"
-        description="A daily streak system & portfolio for your projects. Join the Hack Club community of high school hackers & get yours started."
-        image="https://cloud-53i932gta-hack-club-bot.vercel.app/0scrapbook.jpg"
+        description="The stories that made up an adventure of a lifetime."
+        image="https://slack-oauth-starter-test-xy120.hackclub.dev/meta.png"
       />
       <header
         style={{

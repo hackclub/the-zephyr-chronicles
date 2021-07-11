@@ -12,8 +12,7 @@ import AudioPlayer from '../../components/audio-player'
 import FourOhFour from '../404'
 import Masonry from 'react-masonry-css'
 
-const HOST =
-  process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
+
 
 const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
@@ -45,7 +44,7 @@ const Profile = ({
       <link
         rel="stylesheet"
         type="text/css"
-        href={HOST + `/api/css?url=${profile.css}`}
+        href={`/api/css?url=${profile.css}`}
       />
     )}
     {children}
@@ -178,24 +177,6 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
       heatmap={initialData.heatmap}
       webring={initialData.webring}
     >
-      <Banner isVisible={router.query.welcome === 'true'}>
-        Woah!!! We’re communicating via a website now…welcome to your scrapbook
-        page!
-        <br />
-        Did you know you can{' '}
-        <a href="https://scrapbook.hackclub.com/msw" target="_blank">
-          customize your scrapbook profile
-        </a>
-        ?
-        <br />
-        <a
-          href="https://app.slack.com/client/T0266FRGM/C015M6U6JKU"
-          target="_blank"
-        >
-          Join the #scrapbook-css channel
-        </a>{' '}
-        to see how.
-      </Banner>
     </Profile>
   )
 }

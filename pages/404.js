@@ -5,7 +5,7 @@ import Icon from '@hackclub/icons'
 
 const pageNotFound = () => (
   <main>
-    <Meta as={Head} name="Hack Club's Scrapbook" title="404" />
+    <Meta as={Head} name="The Hacker Zephyr Chronicles" title="404" />
     <h1>404!</h1>
     <Link href="/">
       <button className="button-home">Go home</button>

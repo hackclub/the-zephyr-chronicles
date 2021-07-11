@@ -13,23 +13,6 @@ module.exports = withMDX({
   },
   async rewrites() {
     return [
-      { source: '/summer', destination: '/r/summer-of-making' },
-      {
-        source: '/attachments/:path*{/}?',
-        destination: 'https://dl.airtable.com/.attachmentThumbnails/:path*'
-      },
-      {
-        source: '/customizer/',
-        destination: 'https://scrapbook-customizer.vercel.app/'
-      },
-      {
-        source: '/customizer/(.*)/',
-        destination: 'https://scrapbook-customizer.vercel.app/$1'
-      },
-      {
-        source: '/api/emoji/',
-        destination: 'https://badger.hackclub.dev/api/emoji'
-      },
       {
         source: '/:username.rss',
         destination: '/api/rss/:username'
