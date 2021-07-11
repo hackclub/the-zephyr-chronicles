@@ -6,7 +6,7 @@ To-do:
 - [x] Zephyr Theme (98.css)
 - [x] Location System
 - [x] Tagging System 
-- [ ] Progress Bar
+- [x] Progress Bar
 - [ ] Serving & Storing Files on Zephyr Net
 - [x] Meta Fixed
 - [ ] New Uploading System
