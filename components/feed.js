@@ -32,13 +32,6 @@ const Feed = ({
 
   return (
     <main>
-      <style jsx global>{`
-        @media (prefers-color-scheme: dark) {
-          :root {
-            --colors-text: var(--colors-snow);
-          }
-        }
-      `}</style>
       {children}
       <Posts posts={data} />
       {footer}

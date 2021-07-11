@@ -4,35 +4,40 @@ import { getRawPosts, transformPost } from '../../posts'
 import prisma from '../../../../lib/prisma'
 
 export const getProfile = async (value, field) => {
-  let user = (await prisma.user.findMany({
-    where: {
-      name: value,
-    },
-    select: {
-      id: true,
-      name: true,
-      cssURL: true,
-      audioURL: true,
-      profilePicture: true,
-      Posts: {
-        select: {
-          id: true,
-        }
+  let user = (
+    await prisma.user.findMany({
+      where: {
+        name: value
       },
-    },
-  }))[0]
+      select: {
+        id: true,
+        name: true,
+        cssURL: true,
+        audioURL: true,
+        profilePicture: true,
+        Posts: {
+          select: {
+            id: true
+          }
+        }
+      }
+    })
+  )[0]
   console.log(user)
   if (!user) console.error('Could not fetch account', value)
   return user
 }
 
 export const getPosts = async user => {
+  console.log(user)
   const allUpdates = await getRawPosts(null, {
-    filterByFormula: `{Username} = "${user.username}"`
+    where: {
+      userId: user.id
+    }
   })
 
   if (!allUpdates) console.error('Could not fetch posts')
-  return allUpdates.map(({ id, fields }) => transformPost(id, fields))
+  return allUpdates
 }
 
 export default async (req, res) => {

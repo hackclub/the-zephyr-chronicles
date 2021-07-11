@@ -13,149 +13,96 @@ const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 const Post = ({
   id = new Date().toISOString(),
   profile = false,
-  user = {
-    username: 'abc',
-    avatar: '',
-    displayStreak: false,
-    streakCount: 0
+  User = {
+    name: 'abc',
+    profilePicture: ''
   },
   text,
   attachments = [],
   mux = [],
-  reactions = [],
-  postedAt,
-  slackUrl,
+  createdAt,
+  usState,
+  withUsernames = [],
   muted = false
-}) => (
-  <section
-    className="post"
-    id={id}
-    style={muted ? { opacity: muted, pointerEvents: 'none' } : null}
-  >
-    {profile || !user ? (
-      <header className="post-header">
-        <time
-          className="post-header-date"
-          data-tip
-          data-for={`tip-${id}`}
-          dateTime={postedAt}
-        >
-          {postedAt?.startsWith('20')
-            ? convertTimestampToDate(postedAt)
-            : postedAt}
-        </time>
-        <a href={slackUrl} target="_blank" rel="noopener noreferrer">
-          <Tooltip
-            id={`tip-${id}`}
-            place="top"
-            effect="solid"
-            delayShow={0}
-            delayHide={1000}
+}) => {
+  return (
+    <>
+      <div class="window">
+        <div class="title-bar">
+          <div
+            class="title-bar-text"
+            style={{ paddingLeft: '4px', display: 'flex' }}
           >
-            View on Slack ⧉
-          </Tooltip>
-        </a>
-      </header>
-    ) : (
-      <Link href="/[profile]" as={`/${user.username}`} prefetch={false}>
-        <a className="post-header">
-          {user.avatar && (
-            <Image
-              loading="lazy"
-              src={user.avatar}
-              width={48}
-              height={48}
-              alt={user.username}
-              className="post-header-avatar"
-            />
-          )}
-          <section className="post-header-container">
-            <span className="post-header-name">
-              <strong>@{user.username}</strong>
-              <span
-                className={`badge post-header-streak ${
-                  !user.displayStreak || user.streakCount === 0
-                    ? 'header-streak-zero'
-                    : ''
-                }`}
-                title={`${user.streakCount}-day streak`}
+            {!profile && (
+              <>
+                <Link href={`/${User.name}`}>
+                  <span style={{ marginRight: '4px', color: 'white', cursor: 'pointer' }}>
+                    @{User.name}
+                  </span>
+                </Link>
+                {' at '}
+              </>
+            )}
+            {convertTimestampToDate(createdAt)}
+          </div>
+        </div>
+        <div class="window-body">
+          <p>{text}</p>
+          <div className="post-attachments">
+            {attachments.map(img => (
+              <a
+                key={img}
+                href={img}
+                target="_blank"
+                title={img}
+                className="post-attachment"
               >
-                {`${user.streakCount <= 7 ? user.streakCount : '7+'}`}
-                <Icon size={24} glyph="admin-badge" title="Streak icon" />
-              </span>
-              {user.css && (
-                <Icon
-                  size={24}
-                  glyph="rep"
-                  title="Has a customized profile"
-                  className="post-header-css"
-                />
-              )}
-              {user.audio && (
-                <Icon
-                  size={24}
-                  glyph="rss"
-                  title="Has a customized sound"
-                  className="post-header-audio"
-                />
-              )}
-            </span>
-            <time className="post-header-date" dateTime={postedAt}>
-              {postedAt?.startsWith('20')
-                ? convertTimestampToDate(postedAt)
-                : postedAt}
-            </time>
-          </section>
-        </a>
-      </Link>
-    )}
-    <Content>{text}</Content>
-    {(attachments.length > 0 || mux.length > 0) && (
-      <div className="post-attachments">
-        {filter(attachments, a => a?.type?.toString().startsWith('image')).map(
-          img => (
-            <a
-              key={img.url}
-              href={proxy(img.thumbnails?.full?.url || img.url)}
-              target="_blank"
-              title={img.filename}
-              className="post-attachment"
-            >
-              <Image
-                alt={img.filename}
-                src={img.thumbnails?.large?.url || img.url}
-                loading="lazy"
-                width={img.thumbnails?.large?.width}
-                height={img.thumbnails?.large?.height}
-                layout={!img.thumbnails?.large?.width ? 'fill' : null}
+                <img alt={img} src={img} loading="lazy" layout={'fill'} />
+              </a>
+            ))}
+            {filter(attachments, a =>
+              a?.type?.toString().startsWith('audio')
+            ).map(aud => (
+              <audio
+                key={aud.url}
+                className="post-attachment"
+                src={aud.url}
+                controls
+                preload="metadata"
               />
-            </a>
-          )
-        )}
-        {filter(attachments, a => a?.type?.toString().startsWith('audio')).map(
-          aud => (
-            <audio
-              key={aud.url}
-              className="post-attachment"
-              src={aud.url}
-              controls
-              preload="metadata"
-            />
-          )
-        )}
-        {mux.map(id => (
-          <Video key={id} mux={id} />
-        ))}
+            ))}
+            {mux.map(id => (
+              <Video key={id} mux={id} />
+            ))}
+          </div>
+        </div>
+        <div class="status-bar">
+          <p class="status-bar-field" style={{ whiteSpace: 'nowrap' }}>
+            Taken in {usState}
+          </p>
+          {withUsernames && (
+            <p
+              class="status-bar-field"
+              style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}
+              title="With Arsh Shrivastava, Neer Vikas Verma & Neil Ghosh"
+            >
+              With{' '}
+              {withUsernames.map((name, index) => (
+                <>
+                  <a href={`/${name}`}>@{name}</a>
+                  {index == withUsernames.length - 1
+                    ? '.'
+                    : index == withUsernames.length - 2
+                    ? ' & '
+                    : ', '}
+                </>
+              ))}
+            </p>
+          )}
+        </div>
       </div>
-    )}
-    {reactions.length > 0 && !profile && (
-      <footer className="post-reactions" aria-label="Emoji reactions">
-        {reactions.map(reaction => (
-          <Reaction key={id + reaction.name} {...reaction} />
-        ))}
-      </footer>
-    )}
-  </section>
-)
+    </>
+  )
+}
 
 export default Post

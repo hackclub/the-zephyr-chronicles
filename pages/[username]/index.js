@@ -15,6 +15,7 @@ import AudioPlayer from '../../components/audio-player'
 import ExamplePosts from '../../components/example-posts'
 import FourOhFour from '../404'
 import { clamp } from 'lodash'
+import Masonry from 'react-masonry-css'
 
 const HOST =
   process.env.NODE_ENV === 'development' ? '' : 'https://scrapbook.hackclub.com'
@@ -34,29 +35,16 @@ const Profile = ({
   posts = [],
   children
 }) => (
-  <main className="container">
+  <main
+    className="container"
+    style={{ paddingLeft: '12px', paddingTop: '16px' }}
+  >
     <Meta
       as={Head}
-      name="Hack Club Scrapbook"
-      title={`@${profile.username}`}
-      description={`Follow @${profile.username}’s progress ${
-        profile.displayStreak && 0 < profile.streakCount
-          ? `(currently a ${
-              profile.streakCount <= 7 ? profile.streakCount : '7+'
-            }-day streak!) `
-          : ''
-      }making things in the Hack Club community.`}
-      image={`https://workshop-cards.hackclub.com/@${
-        profile.username
-      }.png?brand=Scrapbook${
-        profile.avatar ? `&images=${profile.avatar}` : ''
-      }&caption=${
-        profile.displayStreak && 0 < profile.streakCount
-          ? profile.streakCount <= 7
-            ? profile.streakCount + '-day streak'
-            : '7%2b day streak'
-          : ''
-      }`}
+      name="the Hacker Zephyr Chronicles"
+      title={`@${profile.name}`}
+      description={`Follow along with @${profile.name}’s journey on the Hacker Zephyr.`}
+      image={profile.profilePicture}
     />
     {profile.css && (
       <link
@@ -67,115 +55,46 @@ const Profile = ({
     )}
     {children}
     <header className="header">
-      <div className="header-col-1">
-        {profile.avatar && (
+      <div className="header-col-1 header-title-avatar">
+        {profile.profilePicture && (
           <Image
-            src={profile.avatar}
-            key={profile.avatar}
+            src={profile.profilePicture}
+            key={profile.profilePicture}
             width={96}
             height={96}
-            alt={profile.username}
+            alt={profile.name}
             className="header-title-avatar"
           />
         )}
-        <section>
-          <h1 className="header-title-name">{profile.username}</h1>
-          <div className="header-content">
-            <span
-              className={`badge header-streak header-streak-${
-                profile.displayStreak && 0 < profile.streakCount
-                  ? profile.streakCount === 1
-                    ? 'singular'
-                    : 'plural'
-                  : 'zero'
-              }`}
-            >
-              <Icon size={32} glyph="admin-badge" title="Streak icon" />
-              <span className="header-streak-count">{`${
-                profile.streakCount <= 7
-                  ? profile.streakCount + '-day streak'
-                  : '7+ day streak'
-              }`}</span>
-            </span>
-            <div className="header-links">
-              <Link
-                href="/[username]/mentions"
-                as={`/${profile.username}/mentions`}
-              >
-                <a className="header-link header-link-mentions">
-                  <Icon size={32} glyph="mention" />
-                </a>
-              </Link>
-              <a
-                href={`https://app.slack.com/client/T0266FRGM/C01504DCLVD/user_profile/${profile.slack}`}
-                target="_blank"
-                className="header-link header-link-slack"
-              >
-                <Icon size={32} glyph="slack-fill" />
-              </a>
-              {profile.github && (
-                <a
-                  href={profile.github}
-                  target="_blank"
-                  className="header-link header-link-github"
-                >
-                  <Icon size={32} glyph="github" />
-                </a>
-              )}
-              {profile.website && (
-                <a
-                  href={profile.website}
-                  target="_blank"
-                  className="header-link header-link-website"
-                >
-                  <Icon size={32} glyph="link" />
-                </a>
-              )}
-            </div>
-            {profile.audio && <AudioPlayer url={profile.audio} />}
-          </div>
-        </section>
       </div>
-      {webring.length > 0 && (
-        <aside className="header-col-2 header-webring">
-          <h2>Webring</h2>
-          <div className="header-webring-mentions">
-            {webring.map(u => (
-              <StaticMention
-                user={u}
-                className="header-webring-mention"
-                title={u.mutual ? 'in each others’ webrings' : null}
-                size={96}
-                key={u.id}
-              >
-                {u.mutual && <Icon glyph="everything" size={24} />}
-              </StaticMention>
-            ))}
-          </div>
-        </aside>
-      )}
-      <aside className="header-col-3 header-chart" aria-hidden>
-        <CalendarHeatmap
-          startDate={heatmapStart}
-          endDate={heatmapEnd}
-          values={heatmap}
-          showWeekdayLabels
-          classForValue={v =>
-            v?.count ? `color-${clamp(v.count, 1, 4)}` : 'color-empty'
-          }
-          tooltipDataAttrs={v => ({
-            'data-tip': v?.date ? `${v?.date} updates: ${v?.count}` : ''
-          })}
-        />
-        <Tooltip />
-      </aside>
+      <section>
+        <h1 className="header-title-name">{profile.name}</h1>
+        <div className="header-content">
+          <button style={{ color: 'black', marginBottom: '10px' }}>{`${
+            posts.length + ' contributions'
+          }`}</button>
+          {profile.audio && <AudioPlayer url={profile.audio} />}
+        </div>
+      </section>
     </header>
-    <article className="posts">
-      {posts.map(post => (
-        <Post key={post.id} user={profile} profile {...post} />
-      ))}
-      {posts.length === 1 && <ExamplePosts />}
-    </article>
+      <Masonry
+        key="masonry"
+        breakpointCols={{
+          10000: 4,
+          1024: 3,
+          640: 2,
+          480: 1,
+          default: 1
+        }}
+        className="masonry-posts"
+        columnClassName="masonry-posts-column"
+      >
+        {posts.map(post => {
+          console.log(post)
+          return <Post key={post.id} user={profile} profile {...post} />
+        })}
+      </Masonry>
+
     {profile.css && (
       <footer className="css" title="External CSS URL">
         <Icon
@@ -202,6 +121,51 @@ const Profile = ({
         </a>
       </footer>
     )}
+    <style jsx global key="masonry-style">{`
+    .masonry-posts {
+      display: flex;
+      width: 100%;
+      max-width: 100%;
+      margin-left: -12px;
+    }
+
+    .masonry-posts-column {
+      background-clip: padding-box;
+    }
+
+    .post {
+      margin-bottom: 2px;
+    }
+
+    @media (min-width: 32em) {
+      .masonry-posts {
+        padding-right: 12px;
+      }
+
+      .masonry-posts-column {
+        padding-left: 12px;
+      }
+
+      .post {
+        border-radius: 12px;
+        margin-bottom: 12px;
+      }
+    }
+
+    @media (min-width: 64em) {
+      .masonry-posts {
+        padding-right: 24px;
+      }
+
+      .masonry-posts-column {
+        padding-left: 12px;
+      }
+
+      .post {
+        margin-bottom: 24px;
+      }
+    }
+  `}</style>
   </main>
 )
 
@@ -251,13 +215,9 @@ const UserPage = props => {
 
   if (router.isFallback) {
     return <Message text="Loading…" />
-  } else if (props.profile?.username) {
+  } else if (props.profile?.name) {
     return (
-      <Page
-        username={props.profile.username}
-        router={router}
-        initialData={props}
-      />
+      <Page username={props.profile.name} router={router} initialData={props} />
     )
   } else {
     return <FourOhFour />
@@ -268,28 +228,19 @@ export default UserPage
 
 export const getStaticPaths = async () => {
   const { map } = require('lodash')
-  const usernames = await fetch(
-    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Slack%20Accounts' +
-      `?select=${JSON.stringify({
-        filterByFormula: '{Full Slack Member?} = 1',
-        fields: ['Username'],
-        sort: [{ field: 'Streak Count', direction: 'desc' }],
-        maxRecords: 75
-      })}`
-  )
-    .then(r => r.json())
-    .then(u => map(u, 'fields.Username'))
+  const { getUsernames } = require('../api/usernames')
+  const usernames = await getUsernames()
   const paths = usernames.map(username => ({ params: { username } }))
   return { paths, fallback: true }
 }
 
 export const getStaticProps = async ({ params }) => {
   const { getProfile, getPosts } = require('../api/users/[username]/index')
-  if (params.username?.length < 2)
+  if (params.name?.length < 2)
     return console.error('No username') || { props: {} }
 
   const profile = await getProfile(params.username)
-  if (!profile || !profile?.username)
+  if (!profile || !profile?.name)
     return console.error('No profile') || { props: {} }
 
   try {
@@ -300,18 +251,9 @@ export const getStaticProps = async ({ params }) => {
       date,
       count: days[date].length || 0
     }))
-    let webring = []
-    if (profile.webring) {
-      webring = await Promise.all(
-        profile.webring.map(async id => {
-          const u = await getProfile(id, 'id')
-          u.mutual = u.webring.includes(profile.id)
-          return u
-        })
-      )
-    }
+    console.log({ profile, heatmap, posts })
     return {
-      props: { profile, webring, heatmap, posts },
+      props: { profile, heatmap, posts },
       revalidate: 1
     }
   } catch (error) {

@@ -54,7 +54,7 @@ const Posts = ({ posts = [] }) => [
       }
 
       .masonry-posts-column {
-        padding-left: 24px;
+        padding-left: 12px;
       }
 
       .post {

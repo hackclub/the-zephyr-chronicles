@@ -1,3 +1,5 @@
+import prisma from '../../../lib/prisma'
+
 export const getRawUsers = async (onlyFull = false) =>
   await prisma.user.findMany({
     select: {

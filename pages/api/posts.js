@@ -1,45 +1,42 @@
 import { find, reverse, orderBy, compact, isEmpty } from 'lodash'
 import { getRawUsers, transformUser } from './users'
 import { stripColons } from '../../lib/emoji'
+import prisma from '../../lib/prisma'
+import { tryGetPreviewData } from 'next/dist/next-server/server/api-utils'
 
-export const getRawPosts = async (max = null, params = {}) => {
-  const opts = {
-    sort: [{ field: 'Message Timestamp', direction: 'desc' }],
+export const getRawPosts = async (max = 10000000000000, params = {}) => {
+  return await prisma.posts.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+    take: max == null ? undefined : max,
+    select: {
+      id: true,
+      userId: true,
+      text: true,
+      attachments: true,
+      createdAt: true,
+      withUsernames: true,
+      usState: true,
+      User: {
+        select: {
+          id: true,
+          name: true,
+          cssURL: true,
+          audioURL: true,
+          profilePicture: true
+        }
+      }
+    },
     ...params
-  }
-  if (max) opts.maxRecords = max
-  return await fetch(
-    'https://airbridge.hackclub.com/v0.1/Summer%20of%20Making%20Streaks/Updates?select=' +
-      JSON.stringify(opts)
-  ).then(r => r.json())
+  }) 
 }
 
 export const formatTS = ts => (ts ? new Date(ts * 1000).toISOString() : null)
 
-export const transformPost = (id = null, fields = {}, user = null) => ({
-  id,
-  user,
-  timestamp: fields['Message Timestamp'] || null,
-  slackUrl: fields['Slack URL'],
-  postedAt: formatTS(fields['Message Timestamp']),
-  text: fields['Text'] || '',
-  attachments: fields['Attachments'] || [],
-  mux: fields['Mux Playback IDs']?.split(',') || [],
-
-})
-
-export const getPosts = async (max = null) => {
+export const getPosts = async (max = 10000000000000) => {
   const users = await getRawUsers(true)
-  return await getRawPosts(max).then(posts =>
-    posts
-      .map(p => {
-        const user = find(users, { id: p.fields['Slack Account']?.[0] }) || {}
-        p.user = user?.fields ? transformUser(user) : null
-        return p
-      })
-      .filter(p => !isEmpty(p.user))
-      .map(({ id, user, fields }) => transformPost(id, fields, user))
-  )
+  return await getRawPosts(max)
 }
 
 export default async (req, res) => {

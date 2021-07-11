@@ -1,8 +1,6 @@
 import React from 'react'
-
-import '../public/fonts.css'
+import "98.css";
 import '../public/app.css'
-import '../public/themes/default.css'
 import Nav from '../components/nav'
 import NProgress from '../components/nprogress'
 
@@ -10,7 +8,7 @@ const App = ({ Component, pageProps }) => (
   <>
     <Nav />
     <NProgress color={'#ec3750'} />
-    <Component {...pageProps} />
+    <div style={{maxHeight: 'calc(100vh - 24px)', minHeight: 'calc(100vh - 24px)', overflowY: 'scroll'}}><Component {...pageProps} /></div>
   </>
 )
 
