@@ -8,10 +8,7 @@ const pageNotFound = () => (
     <Meta as={Head} name="Hack Club's Scrapbook" title="404" />
     <h1>404!</h1>
     <Link href="/">
-      <a className="badge">
-        <Icon glyph="home" size={32} />
-        Go home
-      </a>
+      <button className="button-home">Go home</button>
     </Link>
     <style jsx>{`
       main {
@@ -19,11 +16,6 @@ const pageNotFound = () => (
         text-align: center;
       }
       h1 {
-        color: var(--colors-purple);
-        -webkit-text-stroke: currentColor;
-        -webkit-text-stroke-width: 2px;
-        -webkit-text-fill-color: var(--colors-sheet);
-        font-family: var(--fonts-display);
         font-size: 128px;
         margin: 0;
         line-height: 1.25;
@@ -34,13 +26,11 @@ const pageNotFound = () => (
           font-size: 256px;
         }
       }
-      a {
+      .button-home {
         font-size: 24px;
-        display: inline-flex;
-        align-items: center;
         text-decoration: none;
-        padding: 12px 24px;
-        background-color: var(--colors-cyan);
+        background-color: white;
+        color: black;
       }
       a :global(svg) {
         margin-right: 8px;

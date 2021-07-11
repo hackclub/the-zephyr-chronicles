@@ -5,16 +5,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
-import CalendarHeatmap from '@hackclub/react-calendar-heatmap'
 import Icon from '@hackclub/icons'
 import Banner from '../../components/banner'
-import Message from '../../components/message'
-import { StaticMention } from '../../components/mention'
 import Post from '../../components/post'
 import AudioPlayer from '../../components/audio-player'
-import ExamplePosts from '../../components/example-posts'
 import FourOhFour from '../404'
-import { clamp } from 'lodash'
 import Masonry from 'react-masonry-css'
 
 const HOST =
@@ -77,23 +72,23 @@ const Profile = ({
         </div>
       </section>
     </header>
-      <Masonry
-        key="masonry"
-        breakpointCols={{
-          10000: 4,
-          1024: 3,
-          640: 2,
-          480: 1,
-          default: 1
-        }}
-        className="masonry-posts"
-        columnClassName="masonry-posts-column"
-      >
-        {posts.map(post => {
-          console.log(post)
-          return <Post key={post.id} user={profile} profile {...post} />
-        })}
-      </Masonry>
+    <Masonry
+      key="masonry"
+      breakpointCols={{
+        10000: 4,
+        1024: 3,
+        640: 2,
+        480: 1,
+        default: 1
+      }}
+      className="masonry-posts"
+      columnClassName="masonry-posts-column"
+    >
+      {posts.map(post => {
+        console.log(post)
+        return <Post key={post.id} user={profile} profile {...post} />
+      })}
+    </Masonry>
 
     {profile.css && (
       <footer className="css" title="External CSS URL">
@@ -122,50 +117,50 @@ const Profile = ({
       </footer>
     )}
     <style jsx global key="masonry-style">{`
-    .masonry-posts {
-      display: flex;
-      width: 100%;
-      max-width: 100%;
-      margin-left: -12px;
-    }
-
-    .masonry-posts-column {
-      background-clip: padding-box;
-    }
-
-    .post {
-      margin-bottom: 2px;
-    }
-
-    @media (min-width: 32em) {
       .masonry-posts {
-        padding-right: 12px;
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+        margin-left: -12px;
       }
 
       .masonry-posts-column {
-        padding-left: 12px;
+        background-clip: padding-box;
       }
 
       .post {
-        border-radius: 12px;
-        margin-bottom: 12px;
-      }
-    }
-
-    @media (min-width: 64em) {
-      .masonry-posts {
-        padding-right: 24px;
+        margin-bottom: 2px;
       }
 
-      .masonry-posts-column {
-        padding-left: 12px;
+      @media (min-width: 32em) {
+        .masonry-posts {
+          padding-right: 12px;
+        }
+
+        .masonry-posts-column {
+          padding-left: 12px;
+        }
+
+        .post {
+          border-radius: 12px;
+          margin-bottom: 12px;
+        }
       }
 
-      .post {
-        margin-bottom: 24px;
+      @media (min-width: 64em) {
+        .masonry-posts {
+          padding-right: 24px;
+        }
+
+        .masonry-posts-column {
+          padding-left: 12px;
+        }
+
+        .post {
+          margin-bottom: 24px;
+        }
       }
-    }
-  `}</style>
+    `}</style>
   </main>
 )
 
@@ -176,46 +171,39 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
     initialData,
     refreshInterval: 5000
   })
-  if (!data) {
-    return <Message text="Loading…" />
-  } else if (error && !data) {
-    return <Message text="Error" color1="orange" color2="pink" />
-  } else {
-    return (
-      <Profile
-        {...data}
-        heatmap={initialData.heatmap}
-        webring={initialData.webring}
-      >
-        <Banner isVisible={router.query.welcome === 'true'}>
-          Woah!!! We’re communicating via a website now…welcome to your
-          scrapbook page!
-          <br />
-          Did you know you can{' '}
-          <a href="https://scrapbook.hackclub.com/msw" target="_blank">
-            customize your scrapbook profile
-          </a>
-          ?
-          <br />
-          <a
-            href="https://app.slack.com/client/T0266FRGM/C015M6U6JKU"
-            target="_blank"
-          >
-            Join the #scrapbook-css channel
-          </a>{' '}
-          to see how.
-        </Banner>
-      </Profile>
-    )
-  }
+
+  return (
+    <Profile
+      {...data}
+      heatmap={initialData.heatmap}
+      webring={initialData.webring}
+    >
+      <Banner isVisible={router.query.welcome === 'true'}>
+        Woah!!! We’re communicating via a website now…welcome to your scrapbook
+        page!
+        <br />
+        Did you know you can{' '}
+        <a href="https://scrapbook.hackclub.com/msw" target="_blank">
+          customize your scrapbook profile
+        </a>
+        ?
+        <br />
+        <a
+          href="https://app.slack.com/client/T0266FRGM/C015M6U6JKU"
+          target="_blank"
+        >
+          Join the #scrapbook-css channel
+        </a>{' '}
+        to see how.
+      </Banner>
+    </Profile>
+  )
 }
 
 const UserPage = props => {
   const router = useRouter()
 
-  if (router.isFallback) {
-    return <Message text="Loading…" />
-  } else if (props.profile?.name) {
+  if (props.profile?.name) {
     return (
       <Page username={props.profile.name} router={router} initialData={props} />
     )

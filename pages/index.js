@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Meta from '@hackclub/meta'
-import Reaction from '../components/reaction'
 import Feed from '../components/feed'
 import useSWR from 'swr'
 
@@ -72,11 +71,6 @@ const Header = ({ status, children }) => {
           text-decoration: underline;
           text-decoration-style: wavy;
           text-underline-position: under;
-        }
-        .post-reactions {
-          justify-content: center;
-          align-items: center;
-          margin-top: 12px;
         }
         h2 {
           margin: 0 16px 12px;

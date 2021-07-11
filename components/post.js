@@ -6,7 +6,6 @@ import Link from 'next/link'
 import Content from './content'
 import Video from './video'
 import Image from 'next/image'
-import Reaction from './reaction'
 import dynamic from 'next/dynamic'
 const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 

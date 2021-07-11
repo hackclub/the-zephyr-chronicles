@@ -1,5 +1,4 @@
 import useSWR from 'swr'
-import Message from '../components/message'
 import Posts from '../components/posts'
 import { orderBy } from 'lodash'
 
@@ -24,10 +23,6 @@ const Feed = ({
         <Posts posts={orderBy([initialData, data], a => a.length)[0]} />
       </main>
     )
-  }
-
-  if (!data) {
-    return <Message text="Loading…" />
   }
 
   return (
