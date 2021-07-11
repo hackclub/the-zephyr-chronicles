@@ -2,8 +2,12 @@
 
 To-do:
 
-- [ ] Switch to Postgres + Prisma
+- [x] Switch to Postgres + Prisma
+- [x] Zephyr Theme (98.css)
+- [ ] Location System
+- [ ] Progress Bar
 - [ ] Serving & Storing Files on Zephyr Net
+- [ ] Meta Fixed
 - [ ] New Uploading System
 - [ ] Add Server Side Caching: https://github.com/rjyo/next-boost
 - [ ] Zephyr-ise the flow. IDK what this means yet, but we'll see..
