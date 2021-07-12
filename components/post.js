@@ -1,16 +1,8 @@
 import { convertTimestampToDate } from '../lib/dates'
-import { proxy } from '../lib/images'
-import { filter } from 'lodash'
-import Icon from '@hackclub/icons'
 import Link from 'next/link'
-import Content from './content'
-import Video from './video'
-import Image from 'next/image'
-import dynamic from 'next/dynamic'
-const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
+import Attachment from './attachment'
 
 const Post = ({
-  id = new Date().toISOString(),
   profile = false,
   User = {
     name: 'abc',
@@ -18,14 +10,12 @@ const Post = ({
   },
   text,
   attachments = [],
-  mux = [],
   user,
   createdAt,
   usState,
   withUsernames = [],
   muted = false
 }) => {
-  console.log(profile)
   return (
     <>
       <div className="window">
@@ -56,31 +46,7 @@ const Post = ({
         <div className="window-body">
           <p>{text}</p>
           <div className="post-attachments">
-            {attachments.map(img => (
-              <a
-                key={img}
-                href={img}
-                target="_blank"
-                title={img}
-                className="post-attachment"
-              >
-                <img alt={img} src={img} loading="lazy" layout={'fill'} />
-              </a>
-            ))}
-            {filter(attachments, a =>
-              a?.type?.toString().startsWith('audio')
-            ).map(aud => (
-              <audio
-                key={aud.url}
-                className="post-attachment"
-                src={aud.url}
-                controls
-                preload="metadata"
-              />
-            ))}
-            {mux.map(id => (
-              <Video key={id} mux={id} />
-            ))}
+            {attachments.map(a => (<Attachment file={a} key={a} />))}
           </div>
         </div>
         <div className="status-bar">

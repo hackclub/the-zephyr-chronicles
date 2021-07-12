@@ -8,7 +8,7 @@ export default function New({ users }) {
   const formEl = useRef(null)
   const withEl = useRef(null)
   const textEl = useRef(null)
-  let allowedExtensions = ['jpg', 'png', 'jpeg', 'gif']
+  let allowedExtensions = ['jpg', 'png', 'jpeg', 'gif', 'mp4', 'webm', 'mov']
   const [files, setFiles] = useState([])
   const [clearedUser, setClearedUser] = useState(false)
   const cookies = parseCookies()
@@ -117,7 +117,7 @@ export default function New({ users }) {
         </p>
       )}
       <div {...getRootProps()} style={{ maxWidth: '400px', marginTop: '6px' }}>
-        <input {...getInputProps()}  accept="image/*" />
+        <input {...getInputProps()} />
         {isDragActive ? (
           <ul className="tree-view">
             <br />
