@@ -26,16 +26,22 @@ const Post = ({
 }) => {
   return (
     <>
-      <div class="window">
-        <div class="title-bar">
+      <div className="window">
+        <div className="title-bar">
           <div
-            class="title-bar-text"
+            className="title-bar-text"
             style={{ paddingLeft: '4px', display: 'flex' }}
           >
             {!profile && (
               <>
                 <Link href={`/${User.name}`}>
-                  <span style={{ marginRight: '4px', color: 'white', cursor: 'pointer' }}>
+                  <span
+                    style={{
+                      marginRight: '4px',
+                      color: 'white',
+                      cursor: 'pointer'
+                    }}
+                  >
                     @{User.name}
                   </span>
                 </Link>
@@ -45,7 +51,7 @@ const Post = ({
             {convertTimestampToDate(createdAt)}
           </div>
         </div>
-        <div class="window-body">
+        <div className="window-body">
           <p>{text}</p>
           <div className="post-attachments">
             {attachments.map(img => (
@@ -75,13 +81,15 @@ const Post = ({
             ))}
           </div>
         </div>
-        <div class="status-bar">
-          <p class="status-bar-field" style={{ whiteSpace: 'nowrap' }}>
-            Taken in {usState}
-          </p>
+        <div className="status-bar">
+          {false && (
+            <p className="status-bar-field" style={{ whiteSpace: 'nowrap' }}>
+              Taken in {usState}
+            </p>
+          )}
           {withUsernames && (
             <p
-              class="status-bar-field"
+              className="status-bar-field"
               style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}
               title="With Arsh Shrivastava, Neer Vikas Verma & Neil Ghosh"
             >
