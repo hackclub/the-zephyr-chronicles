@@ -1,6 +1,7 @@
 import { convertTimestampToDate } from '../lib/dates'
 import Link from 'next/link'
 import Attachment from './attachment'
+import WithUsernames from './tags'
 
 const Post = ({
   profile = false,
@@ -49,47 +50,7 @@ const Post = ({
             {attachments.map(a => (<Attachment file={a} key={a} />))}
           </div>
         </div>
-        <div className="status-bar">
-          {false && (
-            <p className="status-bar-field" style={{ whiteSpace: 'nowrap' }}>
-              Taken in {usState}
-            </p>
-          )}
-          {withUsernames && (
-            <p
-              className="status-bar-field"
-              style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}
-              title={
-                'With ' +
-                withUsernames
-                  .map(
-                    (name, index) =>
-                      (profile ? name == user.name ? User.name + ' (OP)' : name : name) +
-                      (index == withUsernames.length - 1
-                        ? '.'
-                        : index == withUsernames.length - 2
-                        ? ' & '
-                        : ', ')
-                  )
-                  .join('')
-              }
-            >
-              With{' '}
-              {withUsernames.map((name, index) => (
-                <>
-                  <a href={`/${profile ? name == user.name ? User.name : name : name}`}>
-                    @{profile ? name == user.name ? User.name + ' (OP)' : name : name}
-                  </a>
-                  {index == withUsernames.length - 1
-                    ? '.'
-                    : index == withUsernames.length - 2
-                    ? ' & '
-                    : ', '}
-                </>
-              ))}
-            </p>
-          )}
-        </div>
+        <WithUsernames usernames={withUsernames} op={User.name} />
       </div>
     </>
   )
