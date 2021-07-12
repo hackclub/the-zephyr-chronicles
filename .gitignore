@@ -7,3 +7,4 @@ package-lock.json
 public/files
 yarn-error.log
 public/fetchme.js
+public/users
