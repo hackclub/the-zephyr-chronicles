@@ -19,11 +19,13 @@ const Post = ({
   text,
   attachments = [],
   mux = [],
+  user,
   createdAt,
   usState,
   withUsernames = [],
   muted = false
 }) => {
+  console.log(profile)
   return (
     <>
       <div className="window">
@@ -91,12 +93,27 @@ const Post = ({
             <p
               className="status-bar-field"
               style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}
-              title="With Arsh Shrivastava, Neer Vikas Verma & Neil Ghosh"
+              title={
+                'With ' +
+                withUsernames
+                  .map(
+                    (name, index) =>
+                      (profile ? name == user.name ? User.name + ' (OP)' : name : name) +
+                      (index == withUsernames.length - 1
+                        ? '.'
+                        : index == withUsernames.length - 2
+                        ? ' & '
+                        : ', ')
+                  )
+                  .join('')
+              }
             >
               With{' '}
               {withUsernames.map((name, index) => (
                 <>
-                  <a href={`/${name}`}>@{name}</a>
+                  <a href={`/${profile ? name == user.name ? User.name : name : name}`}>
+                    @{profile ? name == user.name ? User.name + ' (OP)' : name : name}
+                  </a>
                   {index == withUsernames.length - 1
                     ? '.'
                     : index == withUsernames.length - 2

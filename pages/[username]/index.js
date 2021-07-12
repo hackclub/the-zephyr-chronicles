@@ -40,18 +40,18 @@ const Profile = ({
       description={`Follow along with @${profile.name}’s journey on the Hacker Zephyr.`}
       image={profile.profilePicture}
     />
-    {profile.css && (
+    {profile.cssURL && (
       <link
         rel="stylesheet"
         type="text/css"
-        href={`/api/css?url=${profile.css}`}
+        href={`${profile.cssURL}`}
       />
     )}
     {children}
     <header className="header">
       <div className="header-col-1 header-title-avatar">
         {profile.profilePicture && (
-          <Image
+          <img
             src={profile.profilePicture}
             key={profile.profilePicture}
             width={96}
@@ -65,7 +65,7 @@ const Profile = ({
         <h1 className="header-title-name">{profile.name}</h1>
         <div className="header-content">
           <button style={{ color: 'black', marginBottom: '10px' }}>{`${
-            posts.length + ' contributions'
+            posts.length + ' ' +' contribution' + (posts.length == 1 ? '' : 's')
           }`}</button>
           {profile.audio && <AudioPlayer url={profile.audio} />}
         </div>
@@ -214,15 +214,8 @@ export const getStaticProps = async ({ params }) => {
 
   try {
     const posts = await getPosts(profile)
-    const { map, groupBy } = require('lodash')
-    const days = groupBy(posts, p => p.postedAt?.substring(0, 10))
-    const heatmap = Object.keys(days).map(date => ({
-      date,
-      count: days[date].length || 0
-    }))
-    console.log({ profile, heatmap, posts })
     return {
-      props: { profile, heatmap, posts },
+      props: { profile, posts },
       revalidate: 1
     }
   } catch (error) {

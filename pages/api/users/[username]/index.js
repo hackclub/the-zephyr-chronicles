@@ -32,7 +32,12 @@ export const getPosts = async user => {
   console.log(user)
   const allUpdates = await getRawPosts(null, {
     where: {
-      userId: user.id
+      OR: [
+        {
+          userId: user.id
+        },
+        { withUsernames: { has: user.name } }
+      ]
     }
   })
 

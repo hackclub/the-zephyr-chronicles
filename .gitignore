@@ -6,3 +6,4 @@ node_modules
 package-lock.json
 public/files
 yarn-error.log
+public/fetchme.js

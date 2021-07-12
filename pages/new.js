@@ -38,6 +38,18 @@ export default function New({ users }) {
     setCookie(null, 'user', value)
   }
   async function submit() {
+    if(files.length == 0) {
+      alert('Please add some files!')
+      return
+    }
+    if(typeof parseCookies().user == 'undefined') {
+      alert('Please select yourself!')
+      return
+    }
+    if(textEl.current.value.trim() == '') {
+      alert('Please write some text!')
+      return
+    }
     let formData = new FormData(formEl.current)
     files.forEach(file => {
       formData.append('files', file, file.name)
@@ -53,7 +65,7 @@ export default function New({ users }) {
         method: 'POST',
         body: JSON.stringify({
           attachments: fileUploadPaths.paths,
-          withUsernames: withEl.current.value.split(','),
+          withUsernames: withEl.current.value.split(',').map(x => x.trim()),
           text: textEl.current.value,
           userId: JSON.parse(parseCookies().user).id
         })
@@ -80,12 +92,12 @@ export default function New({ users }) {
           {users.map(user => (
             <div className="field-row">
               <input
-                id="radio13"
+                id={"radio"+user.name}
                 type="radio"
                 name="fieldset-example2"
                 value={JSON.stringify(user)}
               />
-              <label htmlFor="radio13">{user.name}</label>
+              <label htmlFor={"radio"+user.name}>{user.name}</label>
             </div>
           ))}
         </fieldset>
@@ -105,12 +117,12 @@ export default function New({ users }) {
         </p>
       )}
       <div {...getRootProps()} style={{ maxWidth: '400px', marginTop: '6px' }}>
-        <input {...getInputProps()} />
+        <input {...getInputProps()}  accept="image/*" />
         {isDragActive ? (
           <ul className="tree-view">
             <br />
             <li>
-              <strong>Drop your files here!</strong>
+              <strong>Drop your images here!</strong>
             </li>
             <br />
           </ul>
@@ -119,7 +131,7 @@ export default function New({ users }) {
             <br />
             <li>
               <strong>
-                Drag 'n' drop some files here, or click to select files
+                Drag 'n' drop some images here, or click to select images
               </strong>
             </li>
             {files.length > 0 && (
