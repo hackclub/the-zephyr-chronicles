@@ -6,10 +6,26 @@ import Icon from '@hackclub/icons'
 const pageNotFound = () => (
   <main>
     <Meta as={Head} name="The Hacker Zephyr Chronicles" title="404" />
-    <h1>404!</h1>
-    <Link href="/">
-      <button className="button-home">Go home</button>
-    </Link>
+    <div class="window" style={{margin: '32px', width: '250px'}}>
+      <div class="title-bar">
+        <div class="title-bar-text">
+          404: Page not found
+        </div>
+
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <p>This page could not be found.</p>
+        <section class="field-row" style={{justifyContent: 'flex-end'}}>
+          <Link href="/"><button>OK</button></Link>
+          <Link href="/videos/error [レッドゾーン]-5BZLz21ZS_Y.mp4"><button>Cancel</button></Link>
+        </section>
+      </div>
+    </div>
     <style jsx>{`
       main {
         padding: 32px 16px;
