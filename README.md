@@ -14,3 +14,12 @@ To-do:
 - [ ] Zephyr-ise the flow. IDK what this means yet, but we'll see..
 
 And then do more.
+
+---
+
+Deploy/build
+
+- Start up a psql server
+- add a .env & drop in that shit: `DATABASE_URL="postgresql://msw@localhost:5678/mydb?schema=public"` (just an example, don't actually do it)
+- `npx prisma migrate dev`
+- run script from sam to download user info
