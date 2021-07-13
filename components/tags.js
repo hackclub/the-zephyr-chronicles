@@ -1,7 +1,7 @@
 // takes a string & returns the "with X, Y, Z" co-posters
 
 const Tag = ({username, op=false}) => (
-  <a href={`/${username}`}>@{username}{op && ' (OP)'}</a>
+  <a href={`/${username}`} style={{marginLeft: 3}}>@{username}{op && ' (OP)'}</a>
 )
 
 const WithUsernames = ({usernames, op}) => {
