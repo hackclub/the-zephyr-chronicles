@@ -13,18 +13,12 @@ export default function New({ users }) {
   const [clearedUser, setClearedUser] = useState(false)
   const cookies = parseCookies()
   console.log(cookies)
-  const onDrop = useCallback(
-    acceptedFiles => {
+  const onDrop = useCallback(acceptedFiles => {
       let allGood = true
-      acceptedFiles.map(x => {
-        console.log(x.name.split('.')[x.name.split('.').length - 1])
-        console.log()
-        if (
-          !allowedExtensions.includes(
-            x.name.split('.')[x.name.split('.').length - 1]
-          )
-        ) {
-          alert('Unsupported file type!')
+      acceptedFiles.forEach(x => {
+        const extension = x.name.split('.').pop()
+        if (!allowedExtensions.includes(extension)) {
+          alert(`Unsupported file type: '${extension}'`)
           allGood = false
         }
       })
