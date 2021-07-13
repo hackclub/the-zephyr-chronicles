@@ -22,7 +22,7 @@ const pageNotFound = () => (
         <p>This page could not be found.</p>
         <section class="field-row" style={{justifyContent: 'flex-end'}}>
           <Link href="/"><button>OK</button></Link>
-          <Link href="/videos/error [レッドゾーン]-5BZLz21ZS_Y.mp4"><button>Cancel</button></Link>
+          <a href="/videos/error [レッドゾーン]-5BZLz21ZS_Y.mp4"><button>Cancel</button></a>
         </section>
       </div>
     </div>
