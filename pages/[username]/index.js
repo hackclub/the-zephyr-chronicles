@@ -8,7 +8,6 @@ import Meta from '@hackclub/meta'
 import Icon from '@hackclub/icons'
 import Banner from '../../components/banner'
 import Post from '../../components/post'
-import AudioPlayer from '../../components/audio-player'
 import FourOhFour from '../404'
 import Masonry from 'react-masonry-css'
 
@@ -67,7 +66,6 @@ const Profile = ({
           <button style={{ color: 'black', marginBottom: '10px' }}>{`${
             posts.length + ' ' +' contribution' + (posts.length == 1 ? '' : 's')
           }`}</button>
-          {profile.audio && <AudioPlayer url={profile.audio} />}
         </div>
       </section>
     </header>
