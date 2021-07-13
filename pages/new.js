@@ -81,115 +81,130 @@ export default function New({ users }) {
   console.log(users)
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
   return (
-    <div style={{ padding: '0px 12px' }}>
-      <h2>Contribute to the Chronicles</h2>
-      {!cookies.user || clearedUser ? (
-        <fieldset
-          onChange={e => handleUserSelection(e.target.value)}
-          className="users-fieldset"
-        >
-          <legend>Select yourself</legend>
-          {users.map(user => (
-            <div className="field-row">
-              <input
-                id={"radio"+user.name}
-                type="radio"
-                name="fieldset-example2"
-                value={JSON.stringify(user)}
-              />
-              <label htmlFor={"radio"+user.name}>{user.name}</label>
-            </div>
-          ))}
-        </fieldset>
-      ) : (
-        <p>
-          Posting as {JSON.parse(cookies.user).name}, click{' '}
-          <span
-            style={{ textDecoration: 'underline', cursor: 'pointer' }}
-            onClick={() => {
-              destroyCookie(null, 'user')
-              setClearedUser(true)
-            }}
+    <>
+      <div class="window" style={{margin: '32px'}}>
+        <div class="title-bar">
+          <div class="title-bar-text">
+            Contribute to the Chronicles
+          </div>
+          <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body">
+        {!cookies.user || clearedUser ? (
+          <fieldset
+            onChange={e => handleUserSelection(e.target.value)}
+            className="users-fieldset"
           >
-            here
-          </span>{' '}
-          to clear.
-        </p>
-      )}
-      <div {...getRootProps()} style={{ maxWidth: '400px', marginTop: '6px' }}>
-        <input {...getInputProps()} />
-        {isDragActive ? (
-          <ul className="tree-view">
-            <br />
-            <li>
-              <strong>Drop your images here!</strong>
-            </li>
-            <br />
-          </ul>
+            <legend>Select yourself</legend>
+            {users.map(user => (
+              <div className="field-row">
+                <input
+                  id={"radio"+user.name}
+                  type="radio"
+                  name="fieldset-example2"
+                  value={JSON.stringify(user)}
+                />
+                <label htmlFor={"radio"+user.name}>{user.name}</label>
+              </div>
+            ))}
+          </fieldset>
         ) : (
-          <ul className="tree-view">
-            <br />
-            <li>
-              <strong>
-                Drag 'n' drop some images here, or click to select images
-              </strong>
-            </li>
-            {files.length > 0 && (
-              <>
-                So far, you've uploaded{' '}
-                {files.map((x, index) => (
-                  <>
-                    {x.name}
-                    {index == files.length - 1
-                      ? '.'
-                      : index == files.length - 2
-                      ? ' & '
-                      : ', '}
-                  </>
-                ))}
-                <br />
-              </>
-            )}
-            <br />
-          </ul>
+          <span>
+            Posting as {JSON.parse(cookies.user).name}, click{' '}
+            <span
+              style={{ textDecoration: 'underline', cursor: 'pointer' }}
+              onClick={() => {
+                destroyCookie(null, 'user')
+                setClearedUser(true)
+              }}
+            >
+              here
+            </span>{' '}
+            to clear.
+          </span>
         )}
+        <div {...getRootProps()} style={{ maxWidth: '400px', marginTop: '6px' }}>
+          <input {...getInputProps()} />
+          {isDragActive ? (
+            <ul className="tree-view">
+              <br />
+              <li>
+                <strong>Drop your images here!</strong>
+              </li>
+              <br />
+            </ul>
+          ) : (
+            <ul className="tree-view">
+              <br />
+              <li>
+                <strong>
+                  Drag 'n' drop some images here, or click to select images
+                </strong>
+              </li>
+              {files.length > 0 && (
+                <>
+                  So far, you've uploaded{' '}
+                  {files.map((x, index) => (
+                    <>
+                      {x.name}
+                      {index == files.length - 1
+                        ? '.'
+                        : index == files.length - 2
+                        ? ' & '
+                        : ', '}
+                    </>
+                  ))}
+                  <br />
+                </>
+              )}
+              <br />
+            </ul>
+          )}
+        </div>
+        <form ref={formEl}>
+          <div
+            className="field-row-stacked"
+            style={{ maxWidth: '400px', marginTop: '6px' }}
+          >
+            <label htmlFor="text20">What is the story behind these?</label>
+            <textarea
+              id="text20"
+              name="text"
+              rows="8"
+              ref={textEl}
+              style={{ color: 'black' }}
+            ></textarea>
+          </div>
+          <div
+            className="field-row-stacked"
+            style={{ maxWidth: '400px', marginTop: '6px' }}
+          >
+            <label htmlFor="text18">
+              Who was this with? (a comma separated list of usernames)
+            </label>
+            <input
+              id="text18"
+              type="text"
+              name="withUsernames"
+              ref={withEl}
+              style={{ color: 'black' }}
+            />
+          </div>
+        </form>
+        <section class="field-row" style={{justifyContent: 'flex-end'}}>
+          <button
+            onClick={submit}
+            style={{ maxWidth: '400px', marginTop: '6px', color: 'black' }}
+          >
+            Submit!
+          </button>
+        </section>
+        </div>
       </div>
-      <form ref={formEl}>
-        <div
-          className="field-row-stacked"
-          style={{ maxWidth: '400px', marginTop: '6px' }}
-        >
-          <label htmlFor="text20">What is the story behind these?</label>
-          <textarea
-            id="text20"
-            name="text"
-            rows="8"
-            ref={textEl}
-            style={{ color: 'black' }}
-          ></textarea>
-        </div>
-        <div
-          className="field-row-stacked"
-          style={{ maxWidth: '400px', marginTop: '6px' }}
-        >
-          <label htmlFor="text18">
-            Who was this with? (a comma separated list of usernames)
-          </label>
-          <input
-            id="text18"
-            type="text"
-            name="withUsernames"
-            ref={withEl}
-            style={{ color: 'black' }}
-          />
-        </div>
-      </form>
-      <button
-        onClick={submit}
-        style={{ maxWidth: '400px', marginTop: '6px', color: 'black' }}
-      >
-        Submit!
-      </button>
       <style>
         {`
         .users-fieldset{
@@ -206,7 +221,7 @@ export default function New({ users }) {
           margin-top: 6px
         `}
       </style>
-    </div>
+    </>
   )
 }
 
