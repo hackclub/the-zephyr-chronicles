@@ -193,7 +193,7 @@ const UserPage = props => {
 
 export default UserPage
 
-export const getStaticPaths = async () => {
+const getStaticPaths1 = async () => {
   const { map } = require('lodash')
   const { getUsernames } = require('../api/usernames')
   const usernames = await getUsernames()
@@ -201,7 +201,7 @@ export const getStaticPaths = async () => {
   return { paths, fallback: true }
 }
 
-export const getStaticProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }) => {
   const { getProfile, getPosts } = require('../api/users/[username]/index')
   if (params.name?.length < 2)
     return console.error('No username') || { props: {} }
@@ -213,11 +213,10 @@ export const getStaticProps = async ({ params }) => {
   try {
     const posts = await getPosts(profile)
     return {
-      props: { profile, posts },
-      revalidate: 1
+      props: { profile, posts }
     }
   } catch (error) {
     console.error(error)
-    return { props: { profile }, revalidate: 1 }
+    return { props: { profile } }
   }
 }

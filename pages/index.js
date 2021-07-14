@@ -89,11 +89,11 @@ const IndexPage = ({ status, initialData }) => (
 
 export default IndexPage
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const { getPosts } = require('./api/posts')
   const { getStatus } = require('./api/status')
   const initialData = await getPosts(48)
   const status = await getStatus()
   console.log(initialData)
-  return { props: { initialData, status }, revalidate: 1 }
+  return { props: { initialData, status }}
 }
