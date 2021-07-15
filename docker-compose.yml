@@ -5,9 +5,9 @@ services:
     depends_on:
       - postgres
     ports:
-      - ${port}:3000
+      - ${port}:${port}
     environment:
-      PORT: 3000
+      PORT: ${port}
       DATABASE_URL: postgresql://psql@localhost:5432
     volumes:
       - ./:/usr/src/app
