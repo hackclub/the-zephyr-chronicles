@@ -3,4 +3,5 @@
 #echo $PORT
 #docker-compose build
 yarn install
+npx prisma generate
 yarn build
