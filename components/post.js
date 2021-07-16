@@ -10,11 +10,11 @@ const Post = ({
     profilePicture: ''
   },
   text,
-  attachments = [],
+  attachments = '',
   user,
   createdAt,
   usState,
-  withUsernames = [],
+  withUsernames = '',
   muted = false
 }) => {
   return (
@@ -47,10 +47,10 @@ const Post = ({
         <div className="window-body">
           <p>{text}</p>
           <div className="post-attachments">
-            {attachments.map(a => (<Attachment file={a} key={a} />))}
+            {attachments.split(',').map(a => (<Attachment file={a} key={a} />))}
           </div>
         </div>
-        <WithUsernames usernames={withUsernames} op={User.name} />
+        <WithUsernames usernames={withUsernames.split(',')} op={User.name} />
       </div>
     </>
   )

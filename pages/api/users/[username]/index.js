@@ -36,7 +36,7 @@ export const getPosts = async user => {
         {
           userId: user.id
         },
-        { withUsernames: { has: user.name } }
+        { withUsernames: { contains: user.name } }
       ]
     }
   })
