@@ -1,0 +1,7 @@
+
+Command 'postgres' not found, did you mean:
+
+  command 'postgrey' from deb postgrey (1.36-5.1)
+
+Try: sudo apt install <deb name>
+
