@@ -58,8 +58,8 @@ export default function New({ users }) {
       const postRequest = await fetch('/api/create', {
         method: 'POST',
         body: JSON.stringify({
-          attachments: fileUploadPaths.paths,
-          withUsernames: withEl.current.value.split(',').map(x => x.trim()),
+          attachments: fileUploadPaths.paths.join(','),
+          withUsernames: withEl.current.value.split(',').map(x => x.trim()).join(','),
           text: textEl.current.value,
           userId: JSON.parse(parseCookies().user).id
         })
