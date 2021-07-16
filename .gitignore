@@ -8,3 +8,6 @@ public/files
 yarn-error.log
 public/fetchme.js
 public/users
+*.db
+prisma/*.db
+users1/

@@ -1,2 +1,2 @@
 #docker-compose up
-yarn start
+yarn start -p $port
