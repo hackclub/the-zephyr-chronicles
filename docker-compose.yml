@@ -2,17 +2,10 @@ version: "3"
 services:
   app:
     build: ./
-    depends_on:
-      - postgres
     ports:
       - ${port}:${port}
     environment:
       PORT: ${port}
-      DATABASE_URL: postgresql://psql@localhost:5432
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
-  postgres:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: psql

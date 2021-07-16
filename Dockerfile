@@ -7,13 +7,13 @@ WORKDIR /usr/src/app
 COPY package.json ./
 COPY yarn.lock ./
 
-RUN yarn install
+RUN yarn
 # If you are building your code for production
 # RUN npm ci --only=production
 
 # Bundle app source
 COPY . .
 
-#RUN yarn build
+RUN yarn build
 
-#ENTRYPOINT ['yarn', 'start']
+ENTRYPOINT ["yarn", "start"]
