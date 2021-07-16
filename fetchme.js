@@ -68,17 +68,17 @@ async function main(human) {
   }
   const response = await fetch(human.fields['Default Profile Picture'])
   const buffer = await response.buffer()
-  if (!fs.existsSync(`./users1`)) {
-    fs.mkdirSync(`./users1`)
+  if (!fs.existsSync(`./public/users`)) {
+    fs.mkdirSync(`./public/users`)
   }
-  if (!fs.existsSync(`./users1/${human.fields['Username']}`)) {
-    fs.mkdirSync(`./users1/${human.fields['Username']}`)
+  if (!fs.existsSync(`./public/users/${human.fields['Username']}`)) {
+    fs.mkdirSync(`./public/users/${human.fields['Username']}`)
   }
-  fs.writeFile(`./users1/${human.fields['Username']}/avatar.png`, buffer, () =>
+  fs.writeFile(`./public/users/${human.fields['Username']}/avatar.png`, buffer, () =>
     console.log('finished downloading!')
   )
   fs.writeFile(
-    `./users1/${human.fields['Username']}/styles.css`,
+    `./public/users/${human.fields['Username']}/styles.css`,
     '/* Write your custom CSS here! */',
     () => console.log('finished downloading!')
   )
