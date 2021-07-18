@@ -4,19 +4,6 @@ module.exports = withMDX({
   trailingSlash: true,
   images: {
     imageSizes: [18, 36, 54, 24, 48, 72, 96, 144],
-    domains: [
-      'dl.airtable.com',
-      'emoji.slack-edge.com',
-      'cloud-lp0r5yk68.vercel.app'
-    ]
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/:username.rss',
-        destination: '/api/rss/:username'
-      }
-    ]
   },
   async headers() {
     return [
@@ -24,27 +11,6 @@ module.exports = withMDX({
         source: '/(.*)',
         headers: [{ key: 'Access-Control-Allow-Origin', value: '*' }]
       },
-      {
-        source: '/api/emoji/',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'max-age=1000, stale-while-revalidate'
-          }
-        ]
-      },
-      {
-        source: '/attachments/(.+)/',
-        headers: [
-          { key: 'Access-Control-Allow-Origin', value: '*' },
-          { key: 'Access-Control-Allow-Methods', value: 'GET, OPTIONS' },
-          { key: 'Access-Control-Allow-Headers', value: 'Content-Type' },
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=60000, immutable'
-          }
-        ]
-      }
     ]
   }
 })
