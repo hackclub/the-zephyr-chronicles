@@ -1,2 +1,3 @@
+echo "Running on port $PORT"
 #docker-compose up
-yarn start -p $port
+yarn start -p $PORT
