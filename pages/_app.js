@@ -9,7 +9,7 @@ const App = ({ Component, pageProps }) => (
     <Nav />
     <NProgress color={'#ec3750'} />
     <div style={{
-      backgroundImage: "url('windows_background.jpg')",
+      backgroundImage: "url('/windows_background.jpg')",
       maxHeight: 'calc(100vh - 24px)',
       minHeight: 'calc(100vh - 24px)',
       overflowY: 'scroll'

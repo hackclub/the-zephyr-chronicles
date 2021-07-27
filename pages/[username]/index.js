@@ -11,8 +11,6 @@ import Post from '../../components/post'
 import FourOhFour from '../404'
 import Masonry from 'react-masonry-css'
 
-
-
 const Tooltip = dynamic(() => import('react-tooltip'), { ssr: false })
 
 // Calculate heatmap date range
@@ -40,11 +38,7 @@ const Profile = ({
       image={profile.profilePicture}
     />
     {profile.cssURL && (
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href={`${profile.cssURL}`}
-      />
+      <link rel="stylesheet" type="text/css" href={`${profile.cssURL}`} />
     )}
     {children}
     <header className="header">
@@ -64,7 +58,10 @@ const Profile = ({
         <h1 className="header-title-name">{profile.name}</h1>
         <div className="header-content">
           <button style={{ color: 'black', marginBottom: '10px' }}>{`${
-            posts.length + ' ' +' contribution' + (posts.length == 1 ? '' : 's')
+            posts.length +
+            ' ' +
+            ' contribution' +
+            (posts.length == 1 ? '' : 's')
           }`}</button>
         </div>
       </section>
@@ -174,8 +171,7 @@ const Page = ({ username = '', router = {}, initialData = {} }) => {
       {...data}
       heatmap={initialData.heatmap}
       webring={initialData.webring}
-    >
-    </Profile>
+    ></Profile>
   )
 }
 
