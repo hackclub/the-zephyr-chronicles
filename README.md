@@ -1,25 +1,9 @@
 # the_zephyr_chronicles.exe
 
-To-do:
+On board the Hacker Zephyr passengers must make 500 ships or else their home directories on the Zephyrnet will be destroyed 💥
 
-- [x] Switch to Postgres + Prisma
-- [x] Zephyr Theme (98.css)
-- [x] Location System
-- [x] Tagging System 
-- [x] Progress Bar
-- [x] Serving & Storing Files on Zephyr Net
-- [x] Meta Fixed
-- [x] New Uploading System
-- [ ] Add Server Side Caching: https://github.com/rjyo/next-boost
-- [ ] Zephyr-ise the flow. IDK what this means yet, but we'll see..
+These 500 ships will form the Zephyr Chronicles.
 
-And then do more.
+The Zephyr Chronicles was built of [Scrapbook](https://github.com/hackclub/scrapbook). It uses Prisma & an SQLite3 database to store date instead of Airtable and has a custom theme made using [98.css](https://jdan.github.io/98.css/). It also has a custom upload flow made for the Zephyr. The Zephyr Chronicles is built to be ran using [next-boost](https://github.com/rjyo/next-boost) & Next.js' [custom server](https://nextjs.org/docs/advanced-features/custom-server) feature, it will not run in a serverless environment.
 
----
-
-Deploy/build
-
-- Start up a psql server
-- add a .env & drop in that shit: `DATABASE_URL="postgresql://msw@localhost:5678/mydb?schema=public"` (just an example, don't actually do it)
-- `npx prisma migrate dev`
-- run script from sam to download user info
+The final Zephyr Chronicles will be published at [zephyr.hackclub.com](https://zephyr.hackclub.com/).

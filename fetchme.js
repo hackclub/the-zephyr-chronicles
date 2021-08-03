@@ -1,3 +1,5 @@
+// This script can be largely ignored. It is to generate users in the DB.
+
 const { PrismaClient } = require('@prisma/client')
 const fs = require('fs')
 const fetch = require('node-fetch')
