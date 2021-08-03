@@ -18,8 +18,7 @@ export default function uploadFormFiles(req, res) {
 
       let paths = []
 
-      form
-        .on('file', (name, file) => {
+      form.on('file', (name, file) => {
           console.log(file.path)
           const data = fs.readFileSync(file.path)
           let date =
