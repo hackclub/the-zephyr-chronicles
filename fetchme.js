@@ -62,21 +62,31 @@ const data = [
   }
 ]
 
+const data2 = [
+	{
+		id: "ams",
+		fields: {
+			Username: "ams",
+			'Default Profile Picture': 'https://google.com'
+		}
+	}
+]
+
 async function main(human) {
   if (typeof human.fields['Default Profile Picture'] == 'undefined') {
     return
   }
-  const response = await fetch(human.fields['Default Profile Picture'])
-  const buffer = await response.buffer()
+//  const response = await fetch(human.fields['Default Profile Picture'])
+//  const buffer = await response.buffer()
   if (!fs.existsSync(`./public/users`)) {
     fs.mkdirSync(`./public/users`)
   }
   if (!fs.existsSync(`./public/users/${human.fields['Username']}`)) {
     fs.mkdirSync(`./public/users/${human.fields['Username']}`)
   }
-  fs.writeFile(`./public/users/${human.fields['Username']}/avatar.png`, buffer, () =>
-    console.log('finished downloading!')
-  )
+  //fs.writeFile(`./public/users/${human.fields['Username']}/avatar.png`, buffer, () =>
+    //console.log('finished downloading!')
+ // )
   fs.writeFile(
     `./public/users/${human.fields['Username']}/styles.css`,
     '/* Write your custom CSS here! */',
@@ -92,4 +102,4 @@ async function main(human) {
   return created
 }
 
-data.forEach(human => main(human))
+data2.forEach(human => main(human))
