@@ -1518,10 +1518,10 @@ https-browserify@1.0.0, https-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
 
-hybrid-disk-cache@^0.1.6:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/hybrid-disk-cache/-/hybrid-disk-cache-0.1.7.tgz#8d9d58bac3d621630e79897e846a093423e0d998"
-  integrity sha512-SkTt2ZBzWibC1tvWA4Cop6eDTVbu1OlPV4ky2RI00macjS2DeUenpfmnx7IXohGJJN1j+LaUkmpbzPjz8QFl9w==
+hybrid-disk-cache@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/hybrid-disk-cache/-/hybrid-disk-cache-0.2.0.tgz#4046c504ad277f52757b6fc133d74495d6d28ebb"
+  integrity sha512-KzrRMd0OEXB8DI+NNyZ1dc9uiSDvtUmB+g7qUnaZydN/n1/tmmJw5Ju9tmU9tJtU3h6vQuH/oPz2nDY4HBPN7A==
   dependencies:
     better-sqlite3 "^7.1.1"
     fs-extra "^9.0.1"
@@ -2017,20 +2017,20 @@ native-url@0.3.4:
   dependencies:
     querystring "^0.2.0"
 
-next-boost-hdc-adapter@^0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/next-boost-hdc-adapter/-/next-boost-hdc-adapter-0.10.1.tgz#dba5122040116a587b177bdae0dc6dd43f4e3493"
-  integrity sha512-RbCShHGMoRqOzZqsbVEKecFVtKjqVIuGWI2WOa+ywaQsreOgzrZLd795wlGYfXdl8DIfJb3c/yPflNrbFgIMIg==
+next-boost-hdc-adapter@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/next-boost-hdc-adapter/-/next-boost-hdc-adapter-0.11.0.tgz#b8c69118a1cd09bfd97764ba2a651f9ceadde12e"
+  integrity sha512-Cu0vFvNz3lQXTbYBpC9Ifg3iBAxZN8cWaTk14G5v2sX4APCjlW5utgQyksm/wpnfiZziSuDMnSVcJIU5Ap6LhQ==
   dependencies:
-    hybrid-disk-cache "^0.1.6"
+    hybrid-disk-cache "^0.2.0"
 
-next-boost@^0.10.2:
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/next-boost/-/next-boost-0.10.2.tgz#700945028057077f6495dec167b54f3c44cbb635"
-  integrity sha512-StBaY/cB8u24MfuOwykLoEs2+44GfFyd2dB+2tQZa+5jkpss6i+Rk22M4R3izqSL9cTwmhxavCiHjmCb20grKg==
+next-boost@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/next-boost/-/next-boost-0.11.0.tgz#22e65183dc554146619999f71e232d2ff596cd0d"
+  integrity sha512-TIQE/mK30UqdezAajkxcQ3+fMU1KfD/LsFHWomfymZ0ZOqt5zJiqA9VYRPbky7WIpfC/Phkvo0Ad2Q5T94ry0A==
   dependencies:
     multee "^0.2.3"
-    next-boost-hdc-adapter "^0.10.1"
+    next-boost-hdc-adapter "^0.11.0"
 
 next@^11.0.1:
   version "11.0.1"
