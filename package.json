@@ -37,6 +37,6 @@
     "swr": "^0.5.6"
   },
   "devDependencies": {
-    "prisma": "2.28.0"
+    "prisma": "2.29.1"
   }
 }
